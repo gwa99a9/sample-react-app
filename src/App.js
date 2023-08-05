@@ -1,4 +1,5 @@
 import "./App.css";
+import { useState } from "react";
 import { ProfileComponent } from "./ProfileComponent";
 
 const users = [
@@ -33,21 +34,45 @@ const users = [
     ],
   },
 ];
-const isMaintenanceEnabled = false;
 
 function App() {
-  if (!isMaintenanceEnabled) {
-    return (
-      <div className="App">
-        {users.map((user) => {
-          console.log(user);
+  const [bugCount, setBugCount] = useState(0);
+  const [maintenanceMode, setMaintenanceEnabled] = useState(false);
+
+  const increaseBugCount = () => {
+    setBugCount(bugCount + 1);
+    if (bugCount >= 12) setMaintenanceEnabled(true);
+  };
+
+  const decreaseBugCount = () => {
+    if (bugCount > 0) setBugCount(bugCount - 1);
+    if (bugCount <= 12) setMaintenanceEnabled(false);
+  };
+
+  return (
+    <div className="App">
+      <h1>Bug Count: {bugCount}</h1>
+      <button onClick={increaseBugCount}>increaseBugCount</button>
+      <button onClick={decreaseBugCount}>decreaseBugCount</button>
+      <br></br>
+      <br></br>
+      <h1>Maintenance Mode : {!maintenanceMode ? "Enabled" : "Disabled"}</h1>
+      <button
+        onClick={() => {
+          bugCount <= 12
+            ? setMaintenanceEnabled(!maintenanceMode)
+            : alert("ERROR : Too Many Bugs");
+        }}
+      >
+        Enable/Disable Maintenance Mode
+      </button>
+      <hr></hr>
+      {!maintenanceMode &&
+        users.map((user) => {
           return <ProfileComponent key={user.id} user={user} />;
         })}
-      </div>
-    );
-  } else {
-    return "Maintenance Mode Enabled";
-  }
+    </div>
+  );
 }
 
 export default App;
