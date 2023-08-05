@@ -1,48 +1,53 @@
-import styles from "./App.module.css";
+import "./App.css";
+import { ProfileComponent } from "./ProfileComponent";
+
+const users = [
+  {
+    id: 1,
+    name: "obito",
+    handle: "@gwa99a9",
+    email: "obito@gsd.com",
+    salary: "30000",
+    position: "Intern Engineer",
+    company: "Virtusa",
+    skills: [
+      { id: 1, name: "Java" },
+      { id: 2, name: "C++" },
+      { id: 3, name: "Spring Boot" },
+      { id: 4, name: "Python" },
+    ],
+  },
+  {
+    id: 2,
+    name: "Jeewaka",
+    handle: "@jeewaka",
+    email: "jamesheller.jeewake@gmail.com",
+    salary: "100000",
+    position: "Software Engineer",
+    company: "Virtusa",
+    skills: [
+      { id: 1, name: "JS" },
+      { id: 2, name: "Angular" },
+      { id: 3, name: "MongoDB" },
+      { id: 4, name: "Nodejs" },
+    ],
+  },
+];
+const isMaintenanceEnabled = false;
 
 function App() {
-  const age = 159;
-  if (age >= 18) {
+  if (!isMaintenanceEnabled) {
     return (
-      <div className={styles.App}>
-        <UserProfileComponent
-          name="obito"
-          handle="@gwa99a9"
-          email="jamesheller.jeewake@gmail.com"
-        />
-        <Job salary={80000} position="Software Engineer" company="Virtusa" />
-        <UserProfileComponent
-          name="Jeewaka"
-          handle="@gwa99a9"
-          email="jamesheller.jeewake@gmail.com"
-        />
-         <Job salary={120000} position="Engineer" company="Virtusa" />
+      <div className="App">
+        {users.map((user) => {
+          console.log(user);
+          return <ProfileComponent key={user.id} user={user} />;
+        })}
       </div>
     );
   } else {
-    return "Under age";
+    return "Maintenance Mode Enabled";
   }
 }
-
-const UserProfileComponent = (props) => {
-  return (
-    <div className={styles.UserProfileComponent}>
-      <h1>{props.name}</h1>
-      <h1>{props.handle}</h1>
-      <h1>{props.email}</h1>
-    </div>
-  );
-};
-
-const Job = (props) => {
-  return (
-    <div>
-      <h1>{props.salary}</h1>
-      <h2 style={{color: props.salary>=100000 ? "green" : "red"}}>{props.salary>=100000 ? "Good Salary" : "Bad Salary"}</h2>
-      <h1>{props.position}</h1>
-      <h1>{props.company}</h1>
-    </div>
-  );
-};
 
 export default App;

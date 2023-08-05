@@ -36,8 +36,3 @@
     transform: rotate(360deg);
   }
 }
-
-.UserProfileComponent {
-  border: #61dafb;
-  border-style: solid;
-}
