@@ -2,8 +2,15 @@ import "./ProfileComponent.css";
 import { UserProfileComponent } from "./UserProfileComponent";
 import { JobComponent } from "./JobComponent";
 import { SkillComponent } from "./SkillComponent";
+import { useEffect } from "react";
 
 export const ProfileComponent = (props) => {
+  useEffect(() => {
+    console.log("MOUNTED");
+    return () => {
+      console.log("UNMOUNTED");
+    };
+  }, []);
   return (
     <div className="UserProfile">
       <UserProfileComponent

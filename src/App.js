@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ProfileComponent } from "./ProfileComponent";
 
 const users = [
@@ -41,13 +41,16 @@ function App() {
 
   const increaseBugCount = () => {
     setBugCount(bugCount + 1);
-    if (bugCount >= 12) setMaintenanceEnabled(true);
   };
 
   const decreaseBugCount = () => {
     if (bugCount > 0) setBugCount(bugCount - 1);
-    if (bugCount <= 12) setMaintenanceEnabled(false);
   };
+
+  useEffect(() => {
+    if (bugCount >= 12) setMaintenanceEnabled(true);
+    else setMaintenanceEnabled(false);
+  }, [bugCount]);
 
   return (
     <div className="App">
@@ -59,7 +62,7 @@ function App() {
       <h1>Maintenance Mode : {!maintenanceMode ? "Enabled" : "Disabled"}</h1>
       <button
         onClick={() => {
-          bugCount <= 12
+          bugCount < 12
             ? setMaintenanceEnabled(!maintenanceMode)
             : alert("ERROR : Too Many Bugs");
         }}
